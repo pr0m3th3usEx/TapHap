@@ -15,6 +15,12 @@
 		50812B912A032E9C007160F5 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50812B902A032E9C007160F5 /* Location.swift */; };
 		50812B932A032FDF007160F5 /* ApplicationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50812B922A032FDF007160F5 /* ApplicationModel.swift */; };
 		50812B962A0334D9007160F5 /* MapSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50812B952A0334D9007160F5 /* MapSearch.swift */; };
+		509DE51C2A09D02F00E667B8 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509DE51B2A09D02F00E667B8 /* CreateEventView.swift */; };
+		509DE51F2A09D15200E667B8 /* MyEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509DE51E2A09D15200E667B8 /* MyEventsView.swift */; };
+		509DE5212A09D1EF00E667B8 /* ParticipationEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509DE5202A09D1EF00E667B8 /* ParticipationEventView.swift */; };
+		509DE5232A09D33500E667B8 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509DE5222A09D33500E667B8 /* MapView.swift */; };
+		509DE5252A09E02800E667B8 /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509DE5242A09E02800E667B8 /* EventDetailView.swift */; };
+		509DE5272A09EDF400E667B8 /* AddressSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509DE5262A09EDF400E667B8 /* AddressSearchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +33,12 @@
 		50812B902A032E9C007160F5 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		50812B922A032FDF007160F5 /* ApplicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationModel.swift; sourceTree = "<group>"; };
 		50812B952A0334D9007160F5 /* MapSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearch.swift; sourceTree = "<group>"; };
+		509DE51B2A09D02F00E667B8 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
+		509DE51E2A09D15200E667B8 /* MyEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEventsView.swift; sourceTree = "<group>"; };
+		509DE5202A09D1EF00E667B8 /* ParticipationEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationEventView.swift; sourceTree = "<group>"; };
+		509DE5222A09D33500E667B8 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		509DE5242A09E02800E667B8 /* EventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailView.swift; sourceTree = "<group>"; };
+		509DE5262A09EDF400E667B8 /* AddressSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSearchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +71,7 @@
 		50812B7E2A032938007160F5 /* TapHap */ = {
 			isa = PBXGroup;
 			children = (
+				509DE51A2A09CFFD00E667B8 /* Views */,
 				50812B942A0334C8007160F5 /* Integrations */,
 				50812B8D2A032DCC007160F5 /* Structures */,
 				50812B7F2A032938007160F5 /* TapHapApp.swift */,
@@ -93,6 +106,19 @@
 				50812B952A0334D9007160F5 /* MapSearch.swift */,
 			);
 			path = Integrations;
+			sourceTree = "<group>";
+		};
+		509DE51A2A09CFFD00E667B8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				509DE51B2A09D02F00E667B8 /* CreateEventView.swift */,
+				509DE51E2A09D15200E667B8 /* MyEventsView.swift */,
+				509DE5202A09D1EF00E667B8 /* ParticipationEventView.swift */,
+				509DE5222A09D33500E667B8 /* MapView.swift */,
+				509DE5242A09E02800E667B8 /* EventDetailView.swift */,
+				509DE5262A09EDF400E667B8 /* AddressSearchView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,9 +194,15 @@
 				50812B962A0334D9007160F5 /* MapSearch.swift in Sources */,
 				50812B822A032938007160F5 /* ContentView.swift in Sources */,
 				50812B8F2A032DEA007160F5 /* Event.swift in Sources */,
+				509DE51F2A09D15200E667B8 /* MyEventsView.swift in Sources */,
 				50812B932A032FDF007160F5 /* ApplicationModel.swift in Sources */,
+				509DE5272A09EDF400E667B8 /* AddressSearchView.swift in Sources */,
 				50812B912A032E9C007160F5 /* Location.swift in Sources */,
+				509DE5212A09D1EF00E667B8 /* ParticipationEventView.swift in Sources */,
+				509DE5232A09D33500E667B8 /* MapView.swift in Sources */,
 				50812B802A032938007160F5 /* TapHapApp.swift in Sources */,
+				509DE5252A09E02800E667B8 /* EventDetailView.swift in Sources */,
+				509DE51C2A09D02F00E667B8 /* CreateEventView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

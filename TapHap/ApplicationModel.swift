@@ -45,4 +45,15 @@ class ApplicationMdoel: ObservableObject {
         return false
     }
     
+    func getMyEvents() -> [Event] {
+        var myEvents: [Event] = []
+        
+        for i in 0 ..< events.count {
+            if events[i].owner == ownerName {
+                myEvents.append(events[i])
+            }
+        }
+        
+        return myEvents
+    }
 }

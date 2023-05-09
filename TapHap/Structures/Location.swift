@@ -8,11 +8,10 @@
 import Foundation
 import MapKit
 
-struct Location: Identifiable {
+struct Location: Identifiable, Hashable {
     let id = UUID()
-    var city: String
-    var address: String
-    var postalCode: String
+    var title: String
+    var subTitle: String
     
     let latitude: Double
     let longitude: Double

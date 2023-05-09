@@ -6,16 +6,31 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct ContentView: View {
+    @State private var selectedTab = "Map"
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        TabView(selection: $selectedTab) {
+            ParticipationEventView()
+                .tabItem {
+                    Label("My tickets", systemImage: "ticket")
+                }
+                .tag("Tickets")
+            
+            MapView()
+                .tabItem {
+                    Label("Map", systemImage: "location.viewfinder")
+                }
+                .tag("Map")
+            
+            MyEventsView()
+                .tabItem {
+                    Label("My Events", systemImage: "calendar")
+                }
+                .tag("MyEvents")
         }
-        .padding()
     }
 }
 
