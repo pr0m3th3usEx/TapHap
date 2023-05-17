@@ -51,6 +51,12 @@ struct MyEventsView: View {
         )
     ]
     
+    init() {
+        let navBarAppearance = UINavigationBar.appearance()
+        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -71,13 +77,15 @@ struct MyEventsView: View {
                             }
                         }
                     }
+    
                 }
-                .padding(.zero)
+                .padding([.top])
                 .listStyle(.plain)
 
             }
             .padding([.trailing])
             .navigationTitle("Your Events")
+            .navigationBarTitleDisplayMode(.automatic)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -89,6 +97,12 @@ struct MyEventsView: View {
                         }
                     }
                 }
+            }
+            .background(Color.gray.opacity(0.0))
+            .background {
+                Image("background")
+                    .resizable()
+                    .scaledToFill()
             }
         }
         .sheet(isPresented: $createNewEventSheet) {

@@ -20,6 +20,7 @@ struct MapView: View {
             VStack {
                 Map(coordinateRegion: $mapRegion)
                     .frame(width: .infinity, height: 550)
+
             }
             .padding([.top, .leading, .trailing])
             .navigationTitle("TapHap")

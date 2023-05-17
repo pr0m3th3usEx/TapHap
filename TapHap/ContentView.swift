@@ -30,6 +30,8 @@ struct ContentView: View {
                     Label("My Events", systemImage: "calendar")
                 }
                 .tag("MyEvents")
+                .toolbar(.visible, for: .tabBar)
+                .toolbarBackground(Color(.black), for: .tabBar)
         }
     }
 }
