@@ -7,19 +7,58 @@
 
 import Foundation
 
-class ApplicationMdoel: ObservableObject {
+class ApplicationModel: ObservableObject {
     let ownerName: String
-    let defaultCoverIamgeName: String
+    let defaultCoverImageName: String
     
-    var events: [Event]
-    var rsvpEvents: [Event]
+    @Published var events: [Event]
+    @Published var rsvpEvents: [Event]
     
-
     init() {
-        events = []
-        rsvpEvents = []
+        events = [
+            Event(
+                title: "Event 1",
+                description: "Test",
+                dateTime: Date(),
+                owner: "SFSU Gators",
+                coverImage: "default",
+                location: Location(
+                    title: "1 N State Dr",
+                    subTitle: "San Francisco, CA 94132",
+                    latitude: 37.72667786058989,
+                    longitude: -122.48211256627417
+                )
+            ),
+            Event(
+                title: "Saturday Night",
+                description: "Test",
+                dateTime: Date(),
+                owner: "ClubX",
+                coverImage: "default",
+                location: Location(
+                    title: "715 Harrison St",
+                    subTitle: "San Francisco, CA 94107",
+                    latitude: 37.782189582413956,
+                    longitude: -122.39766853187258
+                )
+            ),
+            Event(
+                title: "Event 3",
+                description: "Test",
+                dateTime: Date(),
+                owner: "DNA",
+                coverImage: "default",
+                location: Location(
+                    title: "375 11th St",
+                    subTitle: "San Francisco, CA 94103",
+                    latitude: 37.771149696467994,
+                    longitude: -122.41268574173462
+                )
+            )
+        ]
+        rsvpEvents =  []
         ownerName = "You"
-        defaultCoverIamgeName = "default"
+        defaultCoverImageName = "default"
     }
     
     func createEvent(event: Event) {

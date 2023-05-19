@@ -9,10 +9,15 @@ import SwiftUI
 
 @main
 struct TapHapApp: App {
+    @StateObject private var appModel = ApplicationModel()
+
+    
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.colorScheme, .dark)
+                .environmentObject(appModel)
         }
     }
 }

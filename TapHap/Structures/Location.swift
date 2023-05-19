@@ -19,4 +19,8 @@ struct Location: Identifiable, Hashable {
     var coordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
+    
+    var description: String {
+        return "\(title), \(subTitle)"
+    }
 }

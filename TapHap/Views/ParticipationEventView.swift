@@ -8,83 +8,54 @@
 import SwiftUI
 
 struct ParticipationEventView: View {
-    
-    @State var rsvpEvents: [Event] = [
-        Event(
-            title: "Event 1",
-            description: "Test",
-            dateTime: Date(),
-            owner: "You",
-            coverImage: "default",
-            location: Location(
-                title: "249, BELLEVUE AVE",
-                subTitle: "Daly City",
-                latitude: 37.687923,
-                longitude: -122.470207
-            )
-        ),
-        Event(
-            title: "Event 2",
-            description: "Test",
-            dateTime: Date(),
-            owner: "You",
-            coverImage: "default",
-            location: Location(
-                title: "249, BELLEVUE AVE",
-                subTitle: "Daly City",
-                latitude: 37.687923,
-                longitude: -122.470207
-            )
-        ),
-        Event(
-            title: "Event 3",
-            description: "Test",
-            dateTime: Date(),
-            owner: "You",
-            coverImage: "default",
-            location: Location(
-                title: "249, BELLEVUE AVE",
-                subTitle: "Daly City",
-                latitude: 37.687923,
-                longitude: -122.470207
-            )
-        )
-    ]
-    
+    @EnvironmentObject var model: ApplicationModel
     
     var body: some View {
         NavigationStack {
             VStack {
-                List(rsvpEvents, id: \.self) { event in
-                    NavigationLink {
-                        EventDetailView()
-                    } label: {
-                        HStack {
-                            Image("default")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 90, height: 120)
-                            
-                            VStack(alignment: .leading) {
-                                Text(event.title)
-                                Text("\(event.dateTime.formatted())")
-                                Text("By: \(event.owner)")
+                if (model.rsvpEvents.count > 0) {
+                    List(model.rsvpEvents, id: \.self) { event in
+                        NavigationLink {
+                            EventDetailView(event: event)
+                        } label: {
+                            HStack {
+                                Image("default")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 90, height: 120)
+                                
+                                VStack(alignment: .leading) {
+                                    Text(event.title)
+                                    Text("\(event.dateTime.formatted())")
+                                    Text("By: \(event.owner)")
+                                }
                             }
                         }
                     }
+                    .padding(.zero)
+                    .listStyle(.plain)
+                } else {
+                    Text("You are not participating in any events")
+                        .foregroundColor(.white)
                 }
-                .padding(.zero)
-                .listStyle(.plain)
                 
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding([.trailing])
             .navigationTitle("My Tickets")
+            .background {
+                Image("background")
+                    .resizable()
+                    .scaledToFill()
+            }
         }
     }
 }
 
 struct ParticipationEventView_Previews: PreviewProvider {
+    @StateObject static var appModel = ApplicationModel()
     static var previews: some View {
         ParticipationEventView()
+            .environmentObject(appModel)
     }
 }

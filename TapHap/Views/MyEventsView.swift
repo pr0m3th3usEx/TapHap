@@ -9,110 +9,71 @@ import SwiftUI
 
 struct MyEventsView: View {
     @State private var createNewEventSheet = false
-    @State var myEvents: [Event] = [
-        Event(
-            title: "Event 1",
-            description: "Test",
-            dateTime: Date(),
-            owner: "You",
-            coverImage: "default",
-            location: Location(
-                title: "249, BELLEVUE AVE",
-                subTitle: "Daly City",
-                latitude: 37.687923,
-                longitude: -122.470207
-            )
-        ),
-        Event(
-            title: "Event 2",
-            description: "Test",
-            dateTime: Date(),
-            owner: "You",
-            coverImage: "default",
-            location: Location(
-                title: "249, BELLEVUE AVE",
-                subTitle: "Daly City",
-                latitude: 37.687923,
-                longitude: -122.470207
-            )
-        ),
-        Event(
-            title: "Event 3",
-            description: "Test",
-            dateTime: Date(),
-            owner: "You",
-            coverImage: "default",
-            location: Location(
-                title: "249, BELLEVUE AVE",
-                subTitle: "Daly City",
-                latitude: 37.687923,
-                longitude: -122.470207
-            )
-        )
-    ]
-    
-    init() {
-        let navBarAppearance = UINavigationBar.appearance()
-        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-    }
-    
+    @EnvironmentObject var model: ApplicationModel
+
     var body: some View {
         NavigationStack {
-            VStack {
-                List(myEvents, id: \.self) { event in
-                    NavigationLink {
-                        EventDetailView()
-                    } label: {
-                        HStack {
-                            Image("default")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 90, height: 120)
-                            
-                            VStack(alignment: .leading) {
-                                Text(event.title)
-                                Text("\(event.dateTime.formatted())")
-                                Text("By: \(event.owner)")
-                            }
-                        }
-                    }
-    
-                }
-                .padding([.top])
-                .listStyle(.plain)
-
-            }
-            .padding([.trailing])
-            .navigationTitle("Your Events")
-            .navigationBarTitleDisplayMode(.automatic)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        createNewEventSheet = true
-                    } label: {
-                        HStack {
-                            Image(systemName: "plus")
-                            Text("Create event")
-                        }
-                    }
-                }
-            }
-            .background(Color.gray.opacity(0.0))
-            .background {
+            ZStack {
                 Image("background")
                     .resizable()
                     .scaledToFill()
+                    .ignoresSafeArea()
+
+                VStack {
+                    if (model.getMyEvents().count > 0) {
+                        List(model.getMyEvents(), id: \.self) { event in
+                            NavigationLink {
+                                EventDetailView(event: event)
+                            } label: {
+                                HStack {
+                                    Image("default")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 90, height: 120)
+
+                                    VStack(alignment: .leading) {
+                                        Text(event.title)
+                                        Text("\(event.dateTime.formatted())")
+                                        Text("By: \(event.owner)")
+                                    }
+                                }
+                            }
+                        }
+                        .listStyle(.plain)
+                    } else {
+                        Text("You have not organized any events yet")
+                            .foregroundColor(.white)
+                    }
+                }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            createNewEventSheet = true
+                        } label: {
+                            HStack {
+                                Image(systemName: "plus")
+                                Text("Create event")
+                            }
+                        }
+                    }
+                }
+                .padding(.top, 128)
+            }
+            .navigationTitle("Your Events")
+            .navigationBarTitleDisplayMode(.automatic)
+            .sheet(isPresented: $createNewEventSheet) {
+                CreateEventView()
             }
         }
-        .sheet(isPresented: $createNewEventSheet) {
-            CreateEventView()
-        }
+        .ignoresSafeArea()
     }
 }
 
 struct MyEventsView_Previews: PreviewProvider {
+    @StateObject static var appModel = ApplicationModel()
+    
     static var previews: some View {
         MyEventsView()
+            .environmentObject(appModel)
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Event: Identifiable, Hashable {
+struct Event: Identifiable, Hashable, Equatable {
     var id = UUID()
     var title: String
     var description: String
@@ -15,4 +15,14 @@ struct Event: Identifiable, Hashable {
     var owner: String
     var coverImage: String
     var location: Location
+    
+    static func inArray(_ events: [Event], _ event: Event) -> Bool {
+        for index in 0 ..< events.count {
+            if events[index].id == event.id {
+                return true
+            }
+        }
+        
+        return false
+    }
 }
