@@ -22,7 +22,7 @@ struct EventDetailView: View {
         VStack {
             ZStack {
                 VStack(alignment: .leading) {
-                    Image("background")
+                    Image(event.coverImage)
                         .resizable()
                         .frame(width: .infinity, height: 240)
                     

@@ -26,10 +26,10 @@ struct MyEventsView: View {
                                 EventDetailView(event: event)
                             } label: {
                                 HStack {
-                                    Image("default")
+                                    Image(event.coverImage)
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(width: 90, height: 120)
+                                        .frame(width: 100, height: 90)
 
                                     VStack(alignment: .leading) {
                                         Text(event.title)

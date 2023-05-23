@@ -9,20 +9,28 @@ import SwiftUI
 
 struct ModalDetailView: View {
     
+    @Binding var show: Bool
     @Binding var event: Event?
     
+    @State var isDragging = false
+    
+    @EnvironmentObject var model: ApplicationModel
+    
+    @State private var curHeight: CGFloat = 500
+    let minHeight: CGFloat = 500
+    let maxHeight: CGFloat = 650
     
     let dateFormatter = DateFormatter()
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            if (event != nil) {
+            if (show && event != nil) {
                 Color
                     .black
                     .opacity(0.3)
                     .ignoresSafeArea()
                     .onTapGesture {
-                        event = nil
+                        show = false
                     }
                 
                 mainView
@@ -31,11 +39,21 @@ struct ModalDetailView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         .ignoresSafeArea()
-        .animation(.easeInOut(duration: 0.5))
+        .animation(.easeInOut(duration: 0.1))
     }
     
     var mainView: some View {
         VStack {
+            ZStack {
+                Capsule()
+                    .frame(width: 40, height: 6)
+                    .foregroundColor(.black)
+            }
+            .frame(height: 40)
+            .frame(maxWidth: .infinity)
+            .background(Color.white.opacity(0.00001))
+            .gesture(dragGesture)
+            
             VStack(alignment: .leading, spacing: 14) {
                 Text(event!.title)
                     .foregroundColor(Color.black)
@@ -68,14 +86,16 @@ struct ModalDetailView: View {
                         .foregroundColor(Color.black)
                 }
                 
-                //                if (event.owner != model.ownerName && !Event.inArray(model.rsvpEvents, event)) {
-                //                    Button("Participate") {
-                //                        model.particapteToEvent(event: event)
-                //                    }
-                //                    .buttonStyle(CustomButtonStyle())
-                //                }
+                
+                if (event != nil && event!.owner != model.ownerName && !Event.inArray(model.rsvpEvents, event!)) {
+                    Button("Participate") {
+                        model.particapteToEvent(event: event!)
+                        show = false
+                    }
+                    .buttonStyle(CustomButtonStyle())
+                }
             }
-                .padding(.horizontal)
+                .padding(.horizontal, 30)
                 .frame(
                     maxWidth: .infinity,
                     alignment: .leading
@@ -83,12 +103,56 @@ struct ModalDetailView: View {
         }
             .frame(
                 maxWidth: .infinity,
-                alignment: .center
+                alignment: .leading
             )
-            .padding([.bottom])
-        .frame(height: 400)
-        .frame(maxWidth: .infinity)
-        .background(Color.white)
+            .padding(.bottom, 35)
+            .frame(height: curHeight, alignment: .top)
+            .frame(maxWidth: .infinity)
+            .background {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 30)
+                        .foregroundColor(.white)
+                    Rectangle()
+                        .frame(height: curHeight / 2)
+                        .foregroundColor(.white)
+                }
+            }
+            .animation(isDragging ? nil : .easeInOut(duration: 0.45))
+            .onAppear {
+                dateFormatter.dateFormat = "yyyy-MM-dd 'at' HH:mm"
+            }
+    }
+    
+    @State private var prevDragTransition = CGSize.zero
+
+    var dragGesture: some Gesture {
+        DragGesture(minimumDistance: 0, coordinateSpace: .global)
+            .onChanged { val in
+                if !isDragging {
+                    isDragging = true
+                }
+                
+                let dragAmount = val.translation.height - prevDragTransition.height
+                
+                if (curHeight > maxHeight || curHeight < minHeight) {
+                    curHeight -= dragAmount / 6
+                } else {
+                    curHeight -= dragAmount
+                }
+                
+                
+                prevDragTransition = val.translation
+            }
+            .onEnded { val in
+                prevDragTransition = .zero
+                isDragging = false
+                
+                if curHeight > maxHeight {
+                    curHeight = maxHeight
+                } else if curHeight < minHeight {
+                    curHeight = minHeight
+                }
+            }
     }
 }
 
@@ -106,8 +170,11 @@ struct ModalDetailView_Previews: PreviewProvider {
             longitude: -122.39766853187258
         )
     );
-
+    @State static var show = true
+    @StateObject static var appModel = ApplicationModel()
+    
     static var previews: some View {
-        ModalDetailView(event: $event)
+        ModalDetailView(show: $show, event: $event)
+            .environmentObject(appModel)
     }
 }

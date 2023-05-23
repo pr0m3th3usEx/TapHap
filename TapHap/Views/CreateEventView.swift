@@ -85,9 +85,9 @@ struct CreateEventView: View {
                                 annotationItems: (location == nil ? [] : [location!]) as! [Location]) { l in
 
                                 MapAnnotation(coordinate: l.coordinate) {
-                                    Image(systemName: "pin.circle.fill")
-                                        .font(.title2)
-                                        .foregroundColor(.red)
+                                    Image("EventPoint")
+                                        .resizable()
+                                        .frame(width: 24, height: 24)
                                 }
 
                             }

@@ -17,6 +17,7 @@ struct MapView: View {
     )
 
     @State var selectedEvent: Event? = nil;
+    @State var modalShow = false
     
     var body: some View {
         NavigationStack {
@@ -29,6 +30,7 @@ struct MapView: View {
                                 .frame(width: 24, height: 24)
                                 .onTapGesture {
                                     selectedEvent = event
+                                    modalShow = true
                                 }
                             
                         }
@@ -60,7 +62,7 @@ struct MapView: View {
                     CreateEventView()
                 }
                 
-                ModalDetailView(event: $selectedEvent)
+                ModalDetailView(show: $modalShow, event: $selectedEvent)
             }
         }
     }
