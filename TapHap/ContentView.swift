@@ -33,6 +33,7 @@ struct ContentView: View {
                 MyEventsView()
                     .tabItem {
                         Label("My Events", systemImage: "ticket")
+                        Text("My events")
                     }
                     .tag("My Events")
                     .badge(model.getMyEvents().count)

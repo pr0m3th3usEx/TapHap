@@ -12,36 +12,51 @@ struct ParticipationEventView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                if (model.rsvpEvents.count > 0) {
-                    List(model.rsvpEvents, id: \.self) { event in
-                        NavigationLink {
-                            EventDetailView(event: event)
-                        } label: {
-                            HStack {
-                                Image(event.coverImage)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 100, height: 90)
-                                
-                                VStack(alignment: .leading) {
-                                    Text(event.title)
-                                    Text("\(event.dateTime.formatted())")
-                                    Text("By: \(event.owner)")
+            VStack(spacing: 14) {
+                ScrollView {
+                    if (model.rsvpEvents.count > 0) {
+                        //                    List(model.rsvpEvents, id: \.self) { event in
+                        ForEach(model.rsvpEvents) { event in
+                            NavigationLink {
+                                EventDetailView(event: event)
+                            } label: {
+                                HStack {
+                                    Image(event.coverImage)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 125, height: 130)
+                                    
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        Text(event.title)
+                                            .foregroundColor(.black)
+                                            .multilineTextAlignment(.leading)
+                                            .fontWeight(.medium)
+                                        Text("\(event.dateTime.formatted())")
+                                            .foregroundColor(.black)
+                                        Text("By: \(event.owner)")
+                                            .foregroundColor(.black)
+                                    }
+                                    .frame(alignment: .leading)
                                 }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .frame(minHeight: 100)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 30)
+                                        .foregroundColor(Color.white)
+                                }
+                                
                             }
                         }
+                        .padding(.horizontal)
+                    } else {
+                        Text("You are not participating in any events")
+                            .foregroundColor(.white)
                     }
-                    .padding(.zero)
-                    .listStyle(.plain)
-                } else {
-                    Text("You are not participating in any events")
-                        .foregroundColor(.white)
                 }
                 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding([.trailing])
+            .padding(.vertical)
             .navigationTitle("My Tickets")
             .background {
                 Image("background")

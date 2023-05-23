@@ -16,18 +16,28 @@ struct ModalDetailView: View {
     
     @EnvironmentObject var model: ApplicationModel
     
-    @State private var curHeight: CGFloat = 500
-    let minHeight: CGFloat = 500
+    @State private var curHeight: CGFloat = 400
+    let minHeight: CGFloat = 400
     let maxHeight: CGFloat = 650
     
     let dateFormatter = DateFormatter()
+    
+    
+    let startOpacity: Double = 0.4
+    let endOpacity: Double = 0.8
+    
+    var dragPourcentage: Double {
+        let res = Double(curHeight - minHeight) / (maxHeight - minHeight)
+        
+        return max(0, min(1, res))
+    }
     
     var body: some View {
         ZStack(alignment: .bottom) {
             if (show && event != nil) {
                 Color
                     .black
-                    .opacity(0.3)
+                    .opacity(startOpacity + ((endOpacity - startOpacity) * dragPourcentage))
                     .ignoresSafeArea()
                     .onTapGesture {
                         show = false
@@ -120,6 +130,9 @@ struct ModalDetailView: View {
             .animation(isDragging ? nil : .easeInOut(duration: 0.45))
             .onAppear {
                 dateFormatter.dateFormat = "yyyy-MM-dd 'at' HH:mm"
+            }
+            .onDisappear {
+                curHeight = minHeight
             }
     }
     

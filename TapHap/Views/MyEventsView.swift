@@ -18,46 +18,63 @@ struct MyEventsView: View {
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
-
-                VStack {
-                    if (model.getMyEvents().count > 0) {
-                        List(model.getMyEvents(), id: \.self) { event in
-                            NavigationLink {
-                                EventDetailView(event: event)
+                
+                ScrollView {
+                    VStack {
+                        if (model.getMyEvents().count > 0) {
+                            ForEach(model.getMyEvents()) { event in
+                                NavigationLink {
+                                    EventDetailView(event: event)
+                                } label: {
+                                    HStack {
+                                        Image(event.coverImage)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 125, height: 130)
+                                        
+                                        VStack(alignment: .leading, spacing: 8) {
+                                            Text(event.title)
+                                                .foregroundColor(.black)
+                                                .multilineTextAlignment(.leading)
+                                                .fontWeight(.medium)
+                                            Text("\(event.dateTime.formatted())")
+                                                .foregroundColor(.black)
+                                            Text("By: \(event.owner)")
+                                                .foregroundColor(.black)
+                                        }
+                                        .frame(alignment: .leading)
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .frame(minHeight: 100)
+                                    .background {
+                                        RoundedRectangle(cornerRadius: 30)
+                                            .foregroundColor(Color.white)
+                                    }
+                                    
+                                }
+                            }
+                            .padding(.horizontal)
+                        } else {
+                            Text("You have not organized any events yet")
+                                .foregroundColor(.white)
+                        }
+                    }
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button {
+                                createNewEventSheet = true
                             } label: {
                                 HStack {
-                                    Image(event.coverImage)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 100, height: 90)
-
-                                    VStack(alignment: .leading) {
-                                        Text(event.title)
-                                        Text("\(event.dateTime.formatted())")
-                                        Text("By: \(event.owner)")
-                                    }
+                                    Image(systemName: "plus")
+                                    Text("Create event")
                                 }
                             }
                         }
-                        .listStyle(.plain)
-                    } else {
-                        Text("You have not organized any events yet")
-                            .foregroundColor(.white)
                     }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.top, 128)
                 }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            createNewEventSheet = true
-                        } label: {
-                            HStack {
-                                Image(systemName: "plus")
-                                Text("Create event")
-                            }
-                        }
-                    }
-                }
-                .padding(.top, 128)
+                .frame(maxWidth: .infinity)
             }
             .navigationTitle("Your Events")
             .navigationBarTitleDisplayMode(.automatic)
